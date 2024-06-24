@@ -39,14 +39,9 @@ def index(request):
     products = Product.objects.all()
     return render(request, 'index.html', {'products': products})
 
-# def cart_view(request):
-#     if not request.user.is_authenticated:
-#         return redirect("login")
-#     elif request.user.is_authenticated:
-#          cart_items = Cart.objects.filter(user=request.user)
-#     else:
-#         cart_items = []
-#     return render(request, 'cart.html', {'cart_items': cart_items})
+def pro(request):
+    products = Product.objects.all()
+    return render(request, 'products.html', {'products': products})
 
 
 @login_required

@@ -54,57 +54,10 @@
         color: #d2d2d2;
     }
 
-    .carousel {
-    width: 100%; /* Full width */
-    height: 200px; /* Reduced height */
-    overflow: hidden;
-    position:initial;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.slides {
-    display: flex;
-    width: 100%; /* 4 slides, each taking 100% */
-    height: 100%; /* Ensure it takes full height of carousel */
-    animation: slideAnimation 12s infinite; /* 3s per slide, 4 slides */
-    
-}
-
-.slide {
-    min-width: 100%; /* Each slide takes full width of carousel */
-    height: 100%; /* Ensure each slide takes full height of carousel */
-    box-sizing: border-box;
-}
-
-.slide img {
-    width: 100%; /* Image takes full width of slide */
-    height: 100%; /* Image takes full height of slide */
-    object-fit:cover; /* Ensure images cover the slide area */
-    border-radius: 10px; /* To keep the rounded corners */
-}
-
-@keyframes slideAnimation {
-    0% { transform: translateX(0%); }
-    25% { transform: translateX(-100%); }
-    50% { transform: translateX(-200%); }
-    75% { transform: translateX(-300%); }
-    100% { transform: translateX(0%); }
-}
-
    
     </style>
 
-<div class="carousel">
-    <div class="slides">
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/57bdf8f50cff60b1.jpg?q=20" alt="Image 1"></div>
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/77e402bbfdae0e68.jpg?q=20" alt="Image 2"></div>
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/78e89d02375d5222.jpg?q=20" alt="Image 3"></div>
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/bf42fbdd3d37c8c3.jpg?q=20" alt="Image 4"></div>
-    </div>
-</div>
-    <h2 id="heading">Latest Deals</h2>
+    <h2 id="heading">Products</h2>
     <ul class="product-list">
         {% for product in products %}
             <li class="product-item">

@@ -29,17 +29,20 @@
     </style>
 
     {% block content %}
+    {% load static %}
     <style>
     .proceed:hover
     {
         background-color: rgb(222, 222, 222);
         font-size: larger;
+        text-decoration: none;
 
     }
     .proceed
     {
         background-color: rgb(230, 231, 230);
         font-size: larger;
+        text-decoration: none;
 
     }
    
@@ -59,7 +62,7 @@
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.product.price }}</td>
                 <td>{{ item.total_price }}</td>
-                <td><a href="{% url 'delete_from_cart' item.product.id %}">Remove</a></td>
+                <td><a href="{% url 'delete_from_cart' item.product.id %}"><img src="{% static 'other/remove.png' %}" style="width:36px;height:30px" alt=""></a></td>
             </tr>
             {% endfor %}
         </table>

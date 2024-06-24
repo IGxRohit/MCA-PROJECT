@@ -3,6 +3,7 @@ from ShopNowApp import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('pro/', views.pro, name='pro'),
     path('cart/', views.cart, name='cart'),
     path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('delete_from_cart/<int:product_id>/', views.delete_from_cart, name='delete_from_cart'),
