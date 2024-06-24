@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+<style>*{
+   background-color: rgb(213, 212, 226);
+}</style>
+{% block content %}
+    <h2>Login</h2>
+    <form method="POST" class="form-container">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+{% endblock %}

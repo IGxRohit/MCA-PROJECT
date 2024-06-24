@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Order History{% endblock %}
+{% block content %}
+    <h2>Order History</h2>
+    {% for order in orders %}
+        <div class="order">
+            <h3>Order #{{ order.id }} - {{ order.created_at }}</h3>
+            <p>Total Price: ₹{{ order.total_price }}</p>
+            <p>Address: {{ order.address }}</p>
+            <h4>Items:</h4>
+            <ul>
+                {% for item in order.items.all %}
+                    <li>{{ item.product.name }} (x{{ item.quantity }}) -  ₹{{ item.price }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}
