@@ -268,9 +268,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Navbar -->
     <nav>
+        <h1 class="animate__animated animate__rubberBand" style="background-image: conic-gradient(rgb(206, 255, 12),rgb(250, 225, 63));font-size:x-large;position:initial;font-weight: bold;color: #3366cc; font-family: 'Arial', sans-serif;">ShopNow</h1>
         <div class="nav-container">
             <ul class="nav-links">
-                <li class="animate__animated animate__rubberBand" style="background-image: conic-gradient(yellow,red);font-size:x-large;"><a href="{% url 'index' %}">ShopNow</a></li>
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'order_history' %}">Order History</a></li>
                 {% if user.is_authenticated %}

@@ -25,6 +25,12 @@
         display: block;
         margin: 0 auto 10px;
     }
+    .product-image:hover {
+        max-width: 107%;
+        height: auto;
+        display: block;
+        margin: 0 auto 10px;
+    }
     
     .product-item h3 {
         margin: 10px 0;
@@ -44,131 +50,61 @@
     }
     
     .product-item a:hover {
-        background-color: #005bb5;
+        background-color: #003b76;
+        color: #d2d2d2;
     }
-    /* Ensure the base container takes the full width */
-    /* Ensure the base container takes the full width and centers the carousel */
-    .carousel-container-fluid {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        margin: auto;
-        height: 200px; /* Set the height of the carousel */
-    }
-    
-    /* The main carousel container using flexbox */
-    .carousel {
-        display: flex;
-        width: 400%; /* 100% per slide * number of slides (4 slides) */
-        height: 100%; /* Ensure the carousel takes the full height of the container */
-        animation: slide 12s infinite; /* 4 slides, 3 seconds each */
-        transition: transform 0.5s ease; /* Smooth transition between slides */
-    }
-    
-    /* Each slide occupies 100% of the container's width and height */
-    .carousel-slide {
-        width: 100%;
-        flex: 0 0 100%; /* Each slide takes full width */
-        position: relative;
-        overflow: hidden; /* Hide any overflow from images */
-        height: 100%; /* Each slide should be as tall as the container */
-    }
-    
-    /* The images should cover the slide area and fit within 200px height */
-    .carousel-slide img {
-        width: 1300px;
-        height: 360px;
-        object-fit:fill; /* Cover the entire slide area while maintaining aspect ratio */
-        display: block;
-    }
-    
-    
-    /* Caption styling for overlay text */
-    .caption {
-        position: absolute;
-        bottom: 10px; /* Adjusted for new height */
-        left: 10px; /* Adjusted for new height */
-        color: white;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 5px; /* Adjusted for new height */
-        border-radius: 3px; /* Adjusted for new height */
-        max-width: 90%; /* Ensure the caption doesn't overflow */
-        font-size: 0.8rem; /* Adjusted for new height */
-        text-align: center; /* Center align the text within the caption */
-    }
-    
-    /* Keyframes for the slide animation */
-    @keyframes slide {
-        0% {
-            transform: translateX(0%);
-        }
-        25% {
-            transform: translateX(0%);
-        }
-        33.33% {
-            transform: translateX(-100%);
-        }
-        58.33% {
-            transform: translateX(-100%);
-        }
-        66.66% {
-            transform: translateX(-200%);
-        }
-        91.66% {
-            transform: translateX(-200%);
-        }
-        100% {
-            transform: translateX(-300%);
-        }
-    }
-    
-    /* Additional styling for responsiveness */
-    @media (max-width: 1200px) {
-        .caption {
-            font-size: 0.7rem; /* Adjust font size for smaller screens */
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .caption {
-            font-size: 0.6rem; /* Adjust font size for even smaller screens */
-        }
-    }
-    
-    </style>
-    <div class="carousel-container-fluid">
-        <div class="carousel">
-            <!-- Slide 1 -->
-            <div class="carousel-slide">
-                <img src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/march/brands/GW/Under_1499_Tallhero_3000x1200._CB561212093_.jpg" alt="First Slide">
-                <div class="caption">
-                    <h2>Shop Under ₹1499</h2>
-                    <p>Find great deals on popular brands!</p>
-                </div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="carousel-slide">
-                <img src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/devjyoti/GW/Uber/Nov/D103625178_DesktopTallHero_3000x1200_V3._CB558389732_.jpg" alt="Second Slide">
-                <div class="caption">
-                    <h2>New Arrivals</h2>
-                    <p>Check out the latest products in our collection!</p>
-                </div>
-            </div>
-          
-            <!-- Slide 3 -->
-            <div class="carousel-slide">
-                <img src="https://images-eu.ssl-images-amazon.com/images/G/31/img21/MA2024/GW/June/Unrec/165-1._CB555072489_.jpg" alt="Fourth Slide">
-                <div class="caption">
-                    <h2>Special Promotions</h2>
-                    <p>Uncover great discounts this month!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
 
+    .carousel {
+    width: 100%; /* Full width */
+    height: 200px; /* Reduced height */
+    overflow: hidden;
+    position:initial;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slides {
+    display: flex;
+    width: 100%; /* 4 slides, each taking 100% */
+    height: 100%; /* Ensure it takes full height of carousel */
+    animation: slideAnimation 12s infinite; /* 3s per slide, 4 slides */
     
-    <h2>Latest Smartphones</h2>
+}
+
+.slide {
+    min-width: 100%; /* Each slide takes full width of carousel */
+    height: 100%; /* Ensure each slide takes full height of carousel */
+    box-sizing: border-box;
+}
+
+.slide img {
+    width: 100%; /* Image takes full width of slide */
+    height: 100%; /* Image takes full height of slide */
+    object-fit:cover; /* Ensure images cover the slide area */
+    border-radius: 10px; /* To keep the rounded corners */
+}
+
+@keyframes slideAnimation {
+    0% { transform: translateX(0%); }
+    25% { transform: translateX(-100%); }
+    50% { transform: translateX(-200%); }
+    75% { transform: translateX(-300%); }
+    100% { transform: translateX(0%); }
+}
+
+   
+    </style>
+
+<div class="carousel">
+    <div class="slides">
+        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/57bdf8f50cff60b1.jpg?q=20" alt="Image 1"></div>
+        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/77e402bbfdae0e68.jpg?q=20" alt="Image 2"></div>
+        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/78e89d02375d5222.jpg?q=20" alt="Image 3"></div>
+        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/bf42fbdd3d37c8c3.jpg?q=20" alt="Image 4"></div>
+    </div>
+</div>
+    <h2>Latest Deals</h2>
     <ul class="product-list">
         {% for product in products %}
             <li class="product-item">
