@@ -339,7 +339,7 @@
             <div class="footer-section newsletter">
                 <h4>Stay Connected</h4>
                 <p>Subscribe to our newsletter to receive the latest updates and offers.</p>
-                <form method="post" action="#">
+                <form method="post" action="\subscribe">
                     {% csrf_token %}
                     <input type="email" name="email" placeholder="Your email" required>
                     <button type="submit">Subscribe</button>

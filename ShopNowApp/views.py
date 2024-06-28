@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from ShopNowApp.models import Product, Cart
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.core.mail import EmailMessage
 from ShopNowApp.forms import CheckoutForm
 from django.shortcuts import render, redirect, get_object_or_404
 from ShopNowApp.models import Product, Cart, Order, OrderItem
@@ -44,14 +44,16 @@ def pro(request):
     return render(request, 'products.html', {'products': products})
 
 
-@login_required
 def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
-    if not created:
+    if not request.user.is_authenticated:
+        return redirect("login")
+    else:
+     product = get_object_or_404(Product, id=product_id)
+     cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
+     if not created:
         cart_item.quantity += 1
         cart_item.save()
-    return redirect('cart')
+     return redirect('cart')
 
 
 def cart(request):
@@ -107,3 +109,16 @@ def checkout(request):
     else:
         form = CheckoutForm()
     return render(request, 'checkout.html', {'cart_items': cart_items, 'form': form})
+
+
+def subscribe(request):
+     if request.method == "POST":
+         id=request.POST.get("email")
+         messageemail=f""" Welcome To ShopNow {id}.
+         Thanks For Joining Us.
+          
+
+                 """
+         mail = EmailMessage("contact", messageemail, "creative07vibez@gmail.com ", ["creative07vibez@gmail.com",id])
+         mail.send()
+         return redirect("index")
