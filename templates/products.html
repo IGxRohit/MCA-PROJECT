@@ -69,7 +69,11 @@
                 {% endif %}
                 <p>{{ product.description }}</p>
                 <p>₹{{ product.price }}</p>
+                   {% if not request.user.is_authenticated %}
+                   <a href="{% url 'login' %}">Add to Cart</a>
+                   {% else %}
                 <a style="display: block;position:static;" href="add_to_cart/{{product.id}}">Add to Cart</a>
+                   {% endif %}
             </li>
         {% endfor %}
     </ul>
