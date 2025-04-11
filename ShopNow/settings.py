@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*pb&crq0_7dylo=(z^^i%o_5(xbq$^akm+1&o8ppe-o1evw5x#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -101,13 +101,18 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+# Redirect to this URL after successful login
+LOGIN_REDIRECT_URL = 'index'  # or any named URL like 'dashboard', 'home', etc.
+
+# Redirect to this URL when login is required
+LOGIN_URL = 'login'  # the name you gave to your login view
 
 #for emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'creative07vibez@gmail.com '
-EMAIL_HOST_PASSWORD = 'mvoc yrpg bkzq erii'
+EMAIL_HOST_USER = 'rohitpatial121@gmail.com '
+EMAIL_HOST_PASSWORD = 'dnoi oaua liby vlco'
 EMAIL_PORT = 587
 
 # Internationalization

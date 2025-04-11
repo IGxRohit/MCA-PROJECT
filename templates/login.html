@@ -3,12 +3,141 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <h2>Login</h2>
-    <form method="POST" class="form-container">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-        <a style="text-decoration: none;padding-left: 20px;" href="{% url 'signup' %}">Create New Account</a>
-    </form>
+<style>
+    .custom-login-page .custom-login-wrapper {
+        max-width: 400px;
+        margin: 60px auto;
+        background-color: #ffffff;
+        padding: 35px 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        animation: fadeInLogin 0.6s ease-in-out;
+    }
+
+    .custom-login-page .custom-login-title {
+        text-align: center;
+        color: #004085;
+        margin-bottom: 25px;
+    }
+
+    .custom-login-page .custom-login-form p {
+        margin-bottom: 20px;
+    }
+
+    .custom-login-page .custom-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .custom-login-page .custom-input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .custom-login-page .custom-input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .custom-login-page .custom-error {
+        color: #b40000;
+        background-color: #ffe5e5;
+        padding: 8px 12px;
+        border-radius: 6px;
+        margin-top: 6px;
+        font-size: 0.9rem;
+    }
+
+    .custom-login-page .custom-nonfield {
+        margin-bottom: 15px;
+        color: #842029;
+        background-color: #f8d7da;
+        padding: 10px 15px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .custom-login-page .custom-submit {
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        padding: 12px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .custom-login-page .custom-submit:hover {
+        background-color: #0056b3;
+    }
+
+    .custom-login-page .custom-signup-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #333;
+        text-decoration: none;
+        font-size: 0.95rem;
+    }
+
+    .custom-login-page .custom-signup-link:hover {
+        text-decoration: underline;
+        color: #007bff;
+    }
+
+    @keyframes fadeInLogin {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="custom-login-page">
+    <div class="custom-login-wrapper" data-aos="zoom-in">
+        <h2 class="custom-login-title">Login</h2>
+
+        {% if form.non_field_errors %}
+            <div class="custom-nonfield">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <form method="POST" class="custom-login-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <p>
+                    <label class="custom-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <input 
+                        type="{{ field.field.widget.input_type }}" 
+                        name="{{ field.html_name }}" 
+                        id="{{ field.id_for_label }}" 
+                        class="custom-input"
+                        {% if field.value %} value="{{ field.value|stringformat:'s' }}"{% endif %}
+                        {% for attr, value in field.field.widget.attrs.items %} {{ attr }}="{{ value }}"{% endfor %}
+                    >
+                    {% if field.errors %}
+                        <div class="custom-error">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </p>
+            {% endfor %}
+            <button type="submit" class="custom-submit">Login</button>
+            <a class="custom-signup-link" href="{% url 'signup' %}">Create New Account</a>
+        </form>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+</script>
 {% endblock %}

@@ -1,15 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from ShopNowApp.models import Product, Cart
-from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
-from ShopNowApp.forms import CheckoutForm
-from django.shortcuts import render, redirect, get_object_or_404
 from ShopNowApp.models import Product, Cart, Order, OrderItem
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from ShopNowApp.forms import CheckoutForm
+
+
+# ------------------ Auth Views ------------------
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -20,49 +19,53 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
+            login(request, form.get_user())
             return redirect('index')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+
 def logout_view(request):
     logout(request)
     return redirect('login')
 
+
+# ------------------ Product Views ------------------
+
 def index(request):
     products = Product.objects.all()
     return render(request, 'index.html', {'products': products})
+
 
 def pro(request):
     products = Product.objects.all()
     return render(request, 'products.html', {'products': products})
 
 
+# ------------------ Cart Views ------------------
+
+@login_required
 def add_to_cart(request, product_id):
-    if not request.user.is_authenticated:
-        return redirect("login")
-    else:
-     product = get_object_or_404(Product, id=product_id)
-     cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
-     if not created:
+    product = get_object_or_404(Product, id=product_id)
+    cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
+    if not created:
         cart_item.quantity += 1
         cart_item.save()
-     return redirect('cart')
+    return redirect('cart')
 
 
+@login_required
 def cart(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
-    else:
-     cart_items = Cart.objects.filter(user=request.user)
-     total_price = sum(item.total_price() for item in cart_items)
-     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+    cart_items = Cart.objects.filter(user=request.user)
+    total_price = sum(item.total_price() for item in cart_items)
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
 
 @login_required
 def delete_from_cart(request, product_id):
@@ -70,21 +73,22 @@ def delete_from_cart(request, product_id):
     cart_item.delete()
     return redirect('cart')
 
+
+# ------------------ Search & Order ------------------
+
 def search_results(request):
     query = request.GET.get('q')
-    results = []
-    if query:
-        results = Product.objects.filter(name__icontains=query)
+    results = Product.objects.filter(name__icontains=query) if query else []
     return render(request, 'search_results.html', {'results': results, 'query': query})
 
+
+@login_required
 def order_history(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
-    else:
-     orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'order_history.html', {'orders': orders})
 
 
+# ------------------ Checkout ------------------
 
 @login_required
 def checkout(request):
@@ -97,28 +101,42 @@ def checkout(request):
                 total_price=sum(item.total_price() for item in cart_items),
                 address=form.cleaned_data['address']
             )
-            for item in cart_items:
-                OrderItem.objects.create(
+            OrderItem.objects.bulk_create([
+                OrderItem(
                     order=order,
                     product=item.product,
                     quantity=item.quantity,
                     price=item.product.price
-                )
-            cart_items.delete()  # Clear the cart after checkout
+                ) for item in cart_items
+            ])
+            cart_items.delete()
             return redirect('order_history')
     else:
         form = CheckoutForm()
     return render(request, 'checkout.html', {'cart_items': cart_items, 'form': form})
 
 
-def subscribe(request):
-     if request.method == "POST":
-         id=request.POST.get("email")
-         messageemail=f""" Welcome To ShopNow {id}.
-         Thanks For Joining Us.
-          
+# ------------------ Newsletter Subscription ------------------
 
-                 """
-         mail = EmailMessage("contact", messageemail, "creative07vibez@gmail.com ", ["creative07vibez@gmail.com",id])
-         mail.send()
-         return redirect("index")
+def subscribe(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        if email:
+            message = f"""
+            👋 Welcome to ShopNow, {email}!
+
+            Thank you for subscribing to our newsletter.
+            Stay tuned for the latest product launches, offers, and updates.
+
+            🛍️ Happy Shopping!
+            — ShopNow Team
+            """
+            mail = EmailMessage(
+                subject="Welcome to ShopNow 🛒",
+                body=message,
+                from_email="rohitpatial121@gmail.com",
+                to=[email],
+                cc=["rohitpatial121@gmail.com"]
+            )
+            mail.send()
+        return redirect("index")

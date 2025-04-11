@@ -3,121 +3,133 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<style>/* Product listing styles */
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+    #heading {
+        text-align: center;
+        margin: 30px 0;
+        font-size: 2.5rem;
+        color: #004085;
+        font-weight: bold;
+    }
+
     .product-list {
         list-style: none;
         padding: 0;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+        margin: 40px 0;
     }
-    
+
     .product-item {
-        border: 1px solid #ddd;
-        padding: 10px;
-        border-radius: 5px;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
         text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-    
+
+    .product-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
     .product-image {
         max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto 10px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
     }
+
     .product-image:hover {
-        max-width: 107%;
-        height: auto;
-        display: block;
-        margin: 0 auto 10px;
+        transform: scale(1.05);
     }
-    
+
     .product-item h3 {
-        margin: 10px 0;
+        margin: 15px 0 10px;
+        font-size: 1.25rem;
+        color: #222;
     }
-    
+
     .product-item p {
-        margin: 5px 0;
+        margin: 8px 0;
+        font-size: 0.95rem;
+        color: #555;
     }
-    
+
     .product-item a {
         display: inline-block;
-        padding: 8px 16px;
-        background-color: #0066cc;
+        margin-top: 12px;
+        padding: 10px 18px;
+        background-color: #007bff;
         color: #fff;
         text-decoration: none;
-        border-radius: 3px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
     }
-    
+
     .product-item a:hover {
-        background-color: #003b76;
-        color: #d2d2d2;
+        background-color: #0056b3;
     }
 
     .carousel {
-    width: 100%; /* Full width */
-    height: 200px; /* Reduced height */
-    overflow: hidden;
-    position:initial;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+        margin-top: 20px;
+        background-color: #f5f5f5;
+        text-align: center;
+    }
 
-.slides {
-    display: flex;
-    width: 100%; /* 4 slides, each taking 100% */
-    height: 100%; /* Ensure it takes full height of carousel */
-    animation: slideAnimation 12s infinite; /* 3s per slide, 4 slides */
-    
-}
+    .carousel img {
+        width: 100%;
+        height: 280px;
+        object-fit: contain;
+        border-radius: 12px;
+        padding: 10px;
+        background-color: #fff;
+    }
 
-.slide {
-    min-width: 100%; /* Each slide takes full width of carousel */
-    height: 100%; /* Ensure each slide takes full height of carousel */
-    box-sizing: border-box;
-}
+    @media (max-width: 768px) {
+        .carousel img {
+            height: 180px;
+        }
+    }
+</style>
 
-.slide img {
-    width: 100%; /* Image takes full width of slide */
-    height: 100%; /* Image takes full height of slide */
-    object-fit:cover; /* Ensure images cover the slide area */
-    border-radius: 10px; /* To keep the rounded corners */
-}
-
-@keyframes slideAnimation {
-    0% { transform: translateX(0%); }
-    25% { transform: translateX(-100%); }
-    50% { transform: translateX(-200%); }
-    75% { transform: translateX(-300%); }
-    100% { transform: translateX(0%); }
-}
-
-   
-    </style>
-
-<div class="carousel">
-    <div class="slides">
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/57bdf8f50cff60b1.jpg?q=20" alt="Image 1"></div>
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/77e402bbfdae0e68.jpg?q=20" alt="Image 2"></div>
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/78e89d02375d5222.jpg?q=20" alt="Image 3"></div>
-        <div class="slide"><img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/bf42fbdd3d37c8c3.jpg?q=20" alt="Image 4"></div>
-    </div>
+<!-- ✅ Carousel Section (Only One Image) -->
+<div class="carousel" data-aos="zoom-in">
+    <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/392c5cbe4f0175ef.jpeg?q=20" alt="Banner">
 </div>
-    <h2 id="heading">Latest Deals</h2>
-    <ul class="product-list">
-        {% for product in products %}
-            <li class="product-item">
-                <h3>{{ product.name }}</h3>
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
-                {% else %}
-                    <p>No image available</p>
-                {% endif %}
-                <p>{{ product.description }}</p>
-                <p>₹{{ product.price }}</p>
-                <a style="display: block;position:relative;" href="add_to_cart/{{product.id}}">Add to Cart</a>
-            </li>
-        {% endfor %}
-    </ul>
+
+<!-- ✅ Latest Products Section -->
+<h2 id="heading" data-aos="fade-up">Latest Deals</h2>
+<ul class="product-list">
+    {% for product in products %}
+        <li class="product-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
+            <h3>{{ product.name }}</h3>
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+            <p>{{ product.description }}</p>
+            <p>₹{{ product.price }}</p>
+            <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: true
+    });
+</script>
 {% endblock %}

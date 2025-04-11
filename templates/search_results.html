@@ -3,20 +3,110 @@
 {% block title %}Search Results{% endblock %}
 
 {% block content %}
-    <h2>Search Results for "{{ query }}"</h2>
-    <ul>
-        {% if results %}
-            {% for product in results %}
-                <li>
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.description }}</p>
-                    <p><img src="{{ product.image.url }}"width="80px" alt=""></p>
-                    <p>₹{{ product.price }}</p>
-                    <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
-                </li>
-            {% endfor %}
-        {% else %}
-            <p>No products found matching your query.</p>
-        {% endif %}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<style>
+    .search-heading {
+        text-align: center;
+        margin: 40px 0 20px;
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #004085;
+    }
+
+    .results-list {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 25px;
+        margin: 20px 0 60px;
+    }
+
+    .result-item {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .result-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .result-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .result-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .result-item h3 {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .result-item p {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .add-to-cart-btn {
+        display: inline-block;
+        padding: 10px 16px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .no-results {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #888;
+        margin: 50px 0;
+    }
+</style>
+
+<h2 class="search-heading" data-aos="fade-down">Search Results for "{{ query }}"</h2>
+
+{% if results %}
+    <ul class="results-list">
+        {% for product in results %}
+            <li class="result-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description|truncatechars:100 }}</p>
+                <p>₹{{ product.price }}</p>
+                <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart-btn">Add to Cart</a>
+            </li>
+        {% endfor %}
     </ul>
+{% else %}
+    <p class="no-results" data-aos="fade-up">No products found matching your query.</p>
+{% endif %}
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: true
+    });
+</script>
 {% endblock %}
