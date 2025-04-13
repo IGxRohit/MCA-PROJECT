@@ -122,9 +122,8 @@ def subscribe(request):
     if request.method == "POST":
         email = request.POST.get("email")
         if email:
-            message = f"""
-            Hii {email}
-            Welcome to the ShopNow family!
+            message = f"""Hii {email},
+Welcome to the ShopNow family!
 We’re beyond excited to have you on board. Your inbox just got a whole lot more exciting! 🥳
 
 By subscribing to our newsletter, you've unlocked a gateway to:
