@@ -40,12 +40,6 @@
       gap: 15px;
     }
 
-    .navbar-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
     .navbar-logo {
       font-weight: 800;
       font-size: 1.8rem;
@@ -53,6 +47,8 @@
       animation: outlineGlow 3s linear infinite;
       color: #fff;
       text-shadow: 0 0 3px red, 0 0 6px lime, 0 0 9px blue;
+      flex-shrink: 0;
+      margin-right: auto;
     }
 
     @keyframes outlineGlow {
@@ -83,7 +79,6 @@
     .search-form {
       display: flex;
       align-items: center;
-      margin-left: auto;
     }
 
     .search-form input {
@@ -114,12 +109,18 @@
       margin-left: 20px;
       font-weight: bold;
       color: #fff;
-      animation: glowUser 2s infinite alternate;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      animation: borderGlow 2s linear infinite;
     }
 
-    @keyframes glowUser {
-      from { text-shadow: 0 0 5px #f0a500, 0 0 10px #f0a500; }
-      to { text-shadow: 0 0 10px #f0a500, 0 0 20px #ffaa00; }
+    @keyframes borderGlow {
+      0%   { box-shadow: 0 0 8px red; border-color: red; }
+      25%  { box-shadow: 0 0 8px orange; border-color: orange; }
+      50%  { box-shadow: 0 0 8px lime; border-color: lime; }
+      75%  { box-shadow: 0 0 8px blue; border-color: blue; }
+      100% { box-shadow: 0 0 8px magenta; border-color: magenta; }
     }
 
     .marquee {
@@ -215,23 +216,22 @@
   <!-- Navbar -->
   <nav>
     <div class="nav-container">
-      <div class="navbar-left">
-        <h2 class="navbar-logo">ShopNow</h2>
-        <ul class="nav-links">
-          <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="{% url 'pro' %}">Products</a></li>
-          <li><a href="{% url 'order_history' %}">Order History</a></li>
-          <li><a href="{% url 'cart' %}"><img src="{% static 'other/cart.png' %}" style="width:30px;" alt=""></a></li>
-          {% if not user.is_authenticated %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'signup' %}">Signup</a></li>
-          {% else %}
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-          {% endif %}
-        </ul>
-      </div>
+      <h2 class="navbar-logo">ShopNow</h2>
 
-      <form class="search-form" action="{% url 'search_results' %}" method="get">
+      <ul class="nav-links">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'pro' %}">Products</a></li>
+        <li><a href="{% url 'order_history' %}">Order History</a></li>
+        <li><a href="{% url 'cart' %}"><img src="{% static 'other/cart.png' %}" style="width:30px;" alt=""></a></li>
+        {% if not user.is_authenticated %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+          <li><a href="{% url 'signup' %}">Signup</a></li>
+        {% else %}
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% endif %}
+      </ul>
+
+      <form class="search-form ms-3" action="{% url 'search_results' %}" method="get">
         <input type="text" name="q" placeholder="Search..." required>
         <button type="submit">Go</button>
       </form>

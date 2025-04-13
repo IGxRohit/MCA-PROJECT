@@ -123,13 +123,35 @@ def subscribe(request):
         email = request.POST.get("email")
         if email:
             message = f"""
-            👋 Welcome to ShopNow, {email}!
+            Hii {email}
+            Welcome to the ShopNow family!
+We’re beyond excited to have you on board. Your inbox just got a whole lot more exciting! 🥳
 
-            Thank you for subscribing to our newsletter.
-            Stay tuned for the latest product launches, offers, and updates.
+By subscribing to our newsletter, you've unlocked a gateway to:
 
-            🛍️ Happy Shopping!
-            — ShopNow Team
+🛍️ Early Access to fresh product launches
+
+🎁 Exclusive Offers made just for you
+
+⚡ Real-Time Updates on sales, deals, and trending items
+
+💡 Expert Tips & Style Guides for smarter shopping
+
+And because we’re feeling extra generous… here’s a special welcome treat:
+🎉 Enjoy 10% OFF your first order!
+Use code: WELCOME10 at checkout.
+👉 Start Shopping Now
+
+We’re here to make your shopping experience seamless, fun, and rewarding. Whether you’re browsing for the latest fashion, home upgrades, or everyday essentials, we’ve got everything you need — and then some!
+
+If you ever have any questions, ideas, or just want to say hi — we’re all ears!
+📧 Contact Support
+
+Stay tuned! Exciting things are just around the corner.
+Thanks again for joining us — and get ready to ShopNow like never before.
+
+Happy Shopping!
+— The ShopNow Team
             """
             mail = EmailMessage(
                 subject="Welcome to ShopNow 🛒",
